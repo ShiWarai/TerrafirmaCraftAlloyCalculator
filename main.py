@@ -35,16 +35,17 @@ def menu_selector(mode: int):
                 materials_unit.append(unit)
 
             # Кол-во сплава, для которого надо рассчитать пропорцию
-            alloy_quantity: int = int(input("Требуемое минимальное кол-во сплава: "))
+            alloy_quantity: int = int(input("Требуемый минимальный объём сплава (в мВ): "))
 
             material_proportions = calculate_materials_quantity(introduced_alloy, materials_unit, alloy_quantity)
         case _:
             return
 
     print(f"\nВарианты пропорций для получения сплава %s:" % introduced_alloy)
-    for material_proportion in material_proportions:
-        for material in material_proportion.keys():
-            print(f"Металл \"%s\": %d %s" % (material, material_proportion[material], "мВ"))
+    for i in range(len(material_proportions)):
+        print(f"\n%d)" % (i+1))
+        for material in material_proportions[i].keys():
+            print(f"Металл \"%s\": %d %s" % (material, material_proportions[i][material], "мВ"))
 
 
 if __name__ == '__main__':
