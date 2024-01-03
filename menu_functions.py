@@ -1,24 +1,14 @@
-import math
-
 from alloy import Alloy, Dict
 
 
-def calculate_materials_quantity(alloy: Alloy, materials_unit: list[int], alloy_quantity: int) -> list[Dict[str, int]]:
-    material_proportions = list()
+def calculate_materials_quantity(alloy: Alloy, materials_unit: list[int], alloy_quantity: int) -> Dict[str, int]:
+    minimal_proportion = alloy.get_minimal_proportion(materials_unit, alloy_quantity)
 
-    while True:
-        try:
-            proportion = alloy.generate_proportion(materials_unit, alloy_quantity)
-        except StopIteration:
-            break
+    material_names = list(alloy.composition.keys())
+    material_proportion: Dict[str, int] = dict()
+    for i in range(len(minimal_proportion)):
+        material_proportion[material_names[i]] = materials_unit[i] * minimal_proportion[i]
 
-        material_names = list(alloy.composition.keys())
-        material_proportion: Dict[str, int] = dict()
-        for i in range(len(proportion)):
-            material_proportion[material_names[i]] = proportion[i]
-
-        material_proportions.append(material_proportion)
-
-    return material_proportions
+    return material_proportion
 
 
